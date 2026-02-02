@@ -4,7 +4,7 @@
 
 namespace ApplesGame
 {
-	enum GameModes
+	enum GameModes// мой первый коммит
 	{
 		MODE_DEFAULT = 0,          // 0000
 		MODE_INFINITE_APPLES = 1,  // 0001
@@ -16,9 +16,9 @@ namespace ApplesGame
 	const std::string RESOURCES_PATH = "Resources/";
 	const int SCREEN_WIDTH = 800;
 	const int SCREEN_HEIGHT = 600;
-	const float INITIAL_SPEED = 100.f; // Pixels per second
+	const float INITIAL_SPEED = 100.f; 
 	const float PLAYER_SIZE = 25.f;
-	const float ACCELERATION = 20.f; // Pixels per second
+	const float ACCELERATION = 20.f; 
 	const int NUM_APPLES = 20;
 	const float APPLE_SIZE = 25.f;
 	const int NUM_ROCKS = 5;
