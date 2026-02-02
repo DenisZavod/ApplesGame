@@ -4,7 +4,7 @@
 
 namespace ApplesGame
 {
-	enum GameModes// мой первый коммит
+	enum GameModes// битовые маски (bit-mask)
 	{
 		MODE_DEFAULT = 0,          // 0000
 		MODE_INFINITE_APPLES = 1,  // 0001

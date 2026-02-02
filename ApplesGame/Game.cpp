@@ -6,7 +6,7 @@
 
 namespace ApplesGame
 {
-	void InitGame(Game& game)
+	void InitGame(Game& game) //init_ZD
 	{
 		// Load resources
 		assert(game.playerTexture.loadFromFile(RESOURCES_PATH + "\\Player.png"));
@@ -16,28 +16,28 @@ namespace ApplesGame
 		assert(game.gameOverSoundBuffer.loadFromFile(RESOURCES_PATH + "\\Death.wav"));
 		assert(game.font.loadFromFile(RESOURCES_PATH + "\\Fonts\\Roboto-Regular.ttf"));
 
-		// ИНИЦИАЛИЗАЦИЯ МЕНЮ
+		// Создал меню
 		game.titleText.setFont(game.font);
-		game.titleText.setString("Apples Game");
+		game.titleText.setString("ApplesGame");
 		game.titleText.setCharacterSize(48);
 		game.titleText.setFillColor(sf::Color::White);
 		game.titleText.setPosition(SCREEN_WIDTH / 2.f, SCREEN_HEIGHT / 2.f - 50.f);
-		CenterText(game.titleText); // Центрируем (функция ниже)
+		CenterText(game.titleText); // выравниваю по центру
 
-		// Настройка текста "Начать игру"
+		// Настройки надписи "Начать игру"
 		game.startText.setFont(game.font);
-		game.startText.setString("Start Game (Enter)");
+		game.startText.setString("Start game (Press Enter)");
 		game.startText.setCharacterSize(24);
 		game.startText.setFillColor(sf::Color::White);
 		game.startText.setPosition(SCREEN_WIDTH / 2.f, SCREEN_HEIGHT / 2.f + 50.f);
 		CenterText(game.startText);
 
-		//настройки
+		//параметры текста для настроек
 		game.settingsText.setFont(game.font);
 		game.settingsText.setString("Settings (S)");
 		game.settingsText.setCharacterSize(24);
 		game.settingsText.setFillColor(sf::Color::White);
-		game.settingsText.setPosition(SCREEN_WIDTH / 2.f, SCREEN_HEIGHT / 2.f + 100.f);  // Ниже кнопки "Start Game"
+		game.settingsText.setPosition(SCREEN_WIDTH / 2.f, SCREEN_HEIGHT / 2.f + 100.f); 
 		CenterText(game.settingsText);
 
 		// Init game objects
@@ -47,7 +47,7 @@ namespace ApplesGame
 
 		// Init apples
 		game.applesCount = 0;
-		game.apples = new Apple[game.applesCount]; // Выделяем память
+		game.apples = new Apple[game.applesCount]; 
 		for (int i = 0; i < game.applesCount; ++i)
 		{
 			InitApple(game.apples[i], game);
@@ -62,7 +62,7 @@ namespace ApplesGame
 
 		// Init background
 		game.background.setSize(sf::Vector2f(game.screenRect.size.x, game.screenRect.size.y));
-		game.background.setFillColor(sf::Color::Black);
+		game.background.setFillColor(sf::Color::Cyan);
 		game.background.setPosition(0.f, 0.f);
 
 		// Init sounds
@@ -72,21 +72,21 @@ namespace ApplesGame
 		// Init texts
 		game.scoreText.setFont(game.font);
 		game.scoreText.setCharacterSize(20);
-		game.scoreText.setFillColor(sf::Color::White);
+		game.scoreText.setFillColor(sf::Color::Green);
 		game.scoreText.setString("Score: " + std::to_string(game.score));
 		game.scoreText.setPosition(10.f, 25.f);
 
 		game.pauseText.setFont(game.font);
 		game.pauseText.setCharacterSize(48);
 		game.pauseText.setFillColor(sf::Color::White);
-		game.pauseText.setString("\t\tPAUSED\nPress P to restart");
+		game.pauseText.setString("\t\tpause\npress P to restart game");
 		game.pauseText.setPosition(SCREEN_WIDTH / 2.f, SCREEN_HEIGHT / 2.f - 50.f);
 		CenterText(game.pauseText);
 
 		game.controlsHintText.setFont(game.font);
 		game.controlsHintText.setCharacterSize(20);
 		game.controlsHintText.setFillColor(sf::Color::White);
-		game.controlsHintText.setString("Press P for Pause, ESC to exit");
+		game.controlsHintText.setString("Press P for pause, ESC to exit");
 		game.controlsHintText.setPosition(10.f, 5.f);
 
 		game.gameOverText.setFont(game.font);
@@ -152,14 +152,14 @@ namespace ApplesGame
 	{
 
 
-		// Проверка на паузу
+		// Проверка паузы в игре
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
 		{
-			game.isGamePaused = !game.isGamePaused; // Переключаем состояние паузы
-			sf::sleep(sf::milliseconds(200)); // Добавляем задержку, чтобы избежать множественных срабатываний
+			game.isGamePaused = !game.isGamePaused; // Переключение из состояния паузы
+			sf::sleep(sf::milliseconds(200)); // добавление задержки, для избежания множественных срабатываний
 		}
 
-		// Если игра на паузе, не обновляем игровую логику
+		// Если игра находится паузе, не обновляем игровую логику
 		if (game.isGamePaused)
 		{
 			return;
@@ -221,7 +221,7 @@ namespace ApplesGame
 				}
 				else
 				{
-					//  убираем яблоко за экран или помечаем как "съеденное"
+					//  скрываем яблоко за пределеми экрана
 					SetApplePosition(game.apples[i], { -100, -100 }); // скрываем яблоко
 				}
 				game.scoreText.setString("Score: " + std::to_string(game.score));
@@ -275,7 +275,7 @@ namespace ApplesGame
 
 	void StartGameoverState(Game& game)
 	{
-		// Проверяем, если это бесконечный режим — обновляем рекорд
+		// Проверяем, если это бесконечный режим, то обновляем рекорд
 		if (game.gameMode & MODE_INFINITE_APPLES)
 		{
 			for (auto& rec : leaderboard)
@@ -298,7 +298,7 @@ namespace ApplesGame
 
 	void UpdateGameoverState(Game& game, float deltaTime)
 	{
-		// Проверяем нажатие клавиши Пробел
+		// Проверка на нажатие клавиши Пробела
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 		{
 			//  back to mainmenu
@@ -326,7 +326,7 @@ namespace ApplesGame
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 		{
 			game.isInMainMenu = false;
-			game.isInSettingsMenu = true;  // Переходим в меню настроек
+			game.isInSettingsMenu = true;  // меню настроек
 		}
 	}
 
@@ -339,7 +339,7 @@ namespace ApplesGame
 		{
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 			{
-				game.isInMainMenu = false; //start game
+				game.isInMainMenu = false;
 				StartPlayingState(game);
 			}
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
@@ -354,7 +354,7 @@ namespace ApplesGame
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
 			{
 				game.isInSettingsMenu = false;
-				game.isInMainMenu = true; // Возвращаемся в главное меню
+				game.isInMainMenu = true; // возврат в главное меню
 			}
 		}
 
@@ -373,17 +373,17 @@ namespace ApplesGame
 
 	}
 
-	void HandleGameModeMenuInput(Game& game, sf::Event event)
+	void HandleGameModeMenuInput(Game& game, sf::Event event) // режимы игры
 	{
 		if (game.isInSettingsMenu)
 		{
 			switch (event.key.code)
 			{
-			case sf::Keyboard::Num1: // Стандартный режим (20 яблок с ускорением)
+			case sf::Keyboard::Num1: // стандартный режим (20 яблок с ускорением)
 				game.gameMode = MODE_DEFAULT;
 				break;
 
-			case sf::Keyboard::Num2: // Бесконечные яблоки с ускорением
+			case sf::Keyboard::Num2: // бесконечное количество яблок с ускорением
 				game.gameMode = MODE_INFINITE_APPLES;
 				break;
 
@@ -391,12 +391,12 @@ namespace ApplesGame
 				game.gameMode = MODE_NO_ACCELERATION;
 				break;
 
-			case sf::Keyboard::Num4: // Бесконечные яблоки без ускорения
+			case sf::Keyboard::Num4: // бесконечное количество яблок без ускорения
 				game.gameMode = MODE_INFINITE_APPLES | MODE_NO_ACCELERATION;
 				break;
 
 			case sf::Keyboard::Num5:
-				game.gameMode = MODE_50_APPLES; // Только 50 яблок
+				game.gameMode = MODE_50_APPLES; //  50 яблок
 				break;
 
 			case sf::Keyboard::B:
@@ -412,7 +412,7 @@ namespace ApplesGame
 	{
 		window.clear();
 
-		// Заголовок
+		// заголовок меню настроек
 		sf::Text settingsTitle;
 		settingsTitle.setFont(game.font);
 		settingsTitle.setString("Settings");
@@ -423,7 +423,7 @@ namespace ApplesGame
 
 		sf::Text title;
 		title.setFont(game.font);
-		title.setString("Select Game Mode");
+		title.setString("Select game mode");
 		title.setCharacterSize(40);
 		title.setFillColor(sf::Color::White);
 		title.setPosition(SCREEN_WIDTH / 2.f, 100.f);
@@ -432,7 +432,7 @@ namespace ApplesGame
 
 		sf::Text mode1;
 		mode1.setFont(game.font);
-		mode1.setString("1.20 apples with acceleration ");
+		mode1.setString("1 (20 apples with acceleration)");
 		mode1.setCharacterSize(24);
 		mode1.setPosition(SCREEN_WIDTH / 2.f, 200.f);
 		CenterText(mode1);
@@ -440,7 +440,7 @@ namespace ApplesGame
 
 		sf::Text mode2;
 		mode2.setFont(game.font);
-		mode2.setString("2. Infinite apples with acceleration");
+		mode2.setString("2 (Infinite apples with acceleration)");
 		mode2.setCharacterSize(24);
 		mode2.setPosition(SCREEN_WIDTH / 2.f, 250.f);
 		CenterText(mode2);
@@ -448,7 +448,7 @@ namespace ApplesGame
 
 		sf::Text mode3;
 		mode3.setFont(game.font);
-		mode3.setString("3. 20 apples without acceleration");
+		mode3.setString("3 (20 apples without acceleration)");
 		mode3.setCharacterSize(24);
 		mode3.setPosition(SCREEN_WIDTH / 2.f, 300.f);
 		CenterText(mode3);
@@ -456,7 +456,7 @@ namespace ApplesGame
 
 		sf::Text mode4;
 		mode4.setFont(game.font);
-		mode4.setString("4. Infinite apples without acceleration");
+		mode4.setString("4 (Infinite apples without acceleration)");
 		mode4.setCharacterSize(24);
 		mode4.setPosition(SCREEN_WIDTH / 2.f, 350.f);
 		CenterText(mode4);
@@ -464,7 +464,7 @@ namespace ApplesGame
 
 		sf::Text mode5;
 		mode5.setFont(game.font);
-		mode5.setString("5. 50 apples with acceleration");
+		mode5.setString("5 (50 apples with acceleration)");
 		mode5.setCharacterSize(24);
 		mode5.setPosition(SCREEN_WIDTH / 2.f, 400.f);
 		CenterText(mode5);
@@ -474,7 +474,7 @@ namespace ApplesGame
 		// Кнопка "Назад"
 		sf::Text backText;
 		backText.setFont(game.font);
-		backText.setString("Back to Menu (B)");
+		backText.setString("Back to menu ( press B)");
 		backText.setCharacterSize(24);
 		backText.setPosition(SCREEN_WIDTH / 2.f, SCREEN_HEIGHT - 450.f);
 		CenterText(backText);
@@ -486,7 +486,7 @@ namespace ApplesGame
 
 		if (game.isInMainMenu)
 		{
-			// Рисуем только меню
+			// отрисовка меню
 			window.draw(game.titleText);
 			window.draw(game.startText);
 			window.draw(game.settingsText);
@@ -512,7 +512,7 @@ namespace ApplesGame
 			}
 
 			std::stringstream scoreText;
-			scoreText << "Apples eaten: " << game.score;
+			scoreText << "Apples collected: " << game.score;
 			game.scoreText.setString(scoreText.str());
 			if (!(game.gameMode & MODE_INFINITE_APPLES))
 			{
@@ -567,7 +567,7 @@ namespace ApplesGame
 
 	void DeinializeGame(Game& game)
 	{
-		delete[] game.apples;  // Важно: очищаем, даже если игра перезапускалась
+		delete[] game.apples;  // очищаем в любом случае, даже если игра перезапускалась
 		game.apples = nullptr;
 		game.applesCount = 0;
 	}

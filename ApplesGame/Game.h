@@ -48,9 +48,9 @@ namespace ApplesGame
 
 		//МЕНЮ
 		 // Добавляем флаг меню
-		sf::Text titleText;       // Текст "Apples Game"
-		sf::Text startText;       // Текст "Начать игру (Enter)"
-		sf::Text settingsText;  // Новая кнопка "Настройки"
+		sf::Text titleText;       // текст "Apples game"
+		sf::Text startText;       // текст "Начать игру (Enter)"
+		sf::Text settingsText;  //кнопка "Настройки"
 
 	};
 
