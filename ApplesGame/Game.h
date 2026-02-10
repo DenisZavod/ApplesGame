@@ -28,6 +28,7 @@ namespace ApplesGame
 		bool isInSettingsMenu = false;
 		unsigned int gameMode = MODE_DEFAULT;
 
+
 		// Resources
 		sf::Texture playerTexture;
 		sf::Texture appleTexture;

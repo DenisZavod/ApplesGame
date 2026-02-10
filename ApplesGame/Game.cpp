@@ -4,10 +4,12 @@
 #include "Record.h"
 #include <sstream>
 
+
 namespace ApplesGame
 {
 	void InitGame(Game& game) //init_ZD
 	{
+
 		// Load resources
 		assert(game.playerTexture.loadFromFile(RESOURCES_PATH + "\\Player.png"));
 		assert(game.appleTexture.loadFromFile(RESOURCES_PATH + "\\Apple.png"));
@@ -99,11 +101,16 @@ namespace ApplesGame
 		game.leadertable.setFont(game.font);
 		game.leadertable.setCharacterSize(24);
 		game.leadertable.setFillColor(sf::Color::White);
-
-		HandleGameModeMenuInput;
 	}
 
 
+
+	int GenerateCountApples() // function for generation apples
+	{
+		std::srand(static_cast<unsigned>(std::time(nullptr)));
+		int randomCountApples = MIN_INITIAL_APPLES + (std::rand() % (MAX_INITIAL_APPLES - MIN_INITIAL_APPLES + 1));
+		return randomCountApples;
+	}
 
 	void StartPlayingState(Game& game)
 	{
@@ -122,6 +129,11 @@ namespace ApplesGame
 		if (game.gameMode & MODE_50_APPLES)
 		{
 			appleCount = NUM_APPLES_EXTENDED;
+		}
+
+		if (game.gameMode & MODE_RANDOM_APPLES)
+		{
+			appleCount = GenerateCountApples();
 		}
 
 
@@ -196,6 +208,12 @@ namespace ApplesGame
 		{
 			appleCount = NUM_APPLES_EXTENDED;
 		}
+
+		if (game.gameMode & MODE_RANDOM_APPLES)
+		{
+			appleCount = GenerateCountApples();
+		}
+
 		else
 		{
 			appleCount = NUM_APPLES;
@@ -373,7 +391,7 @@ namespace ApplesGame
 
 	}
 
-	void HandleGameModeMenuInput(Game& game, sf::Event event) // режимы игры
+	void HandleGameModeMenuInput(Game& game, sf::Event event) // mode game
 	{
 		if (game.isInSettingsMenu)
 		{
@@ -397,6 +415,10 @@ namespace ApplesGame
 
 			case sf::Keyboard::Num5:
 				game.gameMode = MODE_50_APPLES; //  50 €блок
+				break;
+
+			case sf::Keyboard::Num6:
+				game.gameMode = MODE_RANDOM_APPLES | MODE_NO_ACCELERATION; //  random count apples between 1 and 20
 				break;
 
 			case sf::Keyboard::B:
@@ -471,12 +493,21 @@ namespace ApplesGame
 		window.draw(mode5);
 
 
+		sf::Text mode6;
+		mode5.setFont(game.font);
+		mode5.setString("6 (random count apples)");
+		mode5.setCharacterSize(24);
+		mode5.setPosition(SCREEN_WIDTH / 2.f, 450.f);
+		CenterText(mode5);
+		window.draw(mode5);
+
+
 		//  нопка "Ќазад"
 		sf::Text backText;
 		backText.setFont(game.font);
 		backText.setString("Back to menu ( press B)");
 		backText.setCharacterSize(24);
-		backText.setPosition(SCREEN_WIDTH / 2.f, SCREEN_HEIGHT - 450.f);
+		backText.setPosition(SCREEN_WIDTH / 2.f, SCREEN_HEIGHT - 450.f); // redact
 		CenterText(backText);
 		window.draw(backText);
 	}

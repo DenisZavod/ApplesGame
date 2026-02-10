@@ -8,8 +8,9 @@ namespace ApplesGame
 	{
 		MODE_DEFAULT = 0,          // 0000
 		MODE_INFINITE_APPLES = 1,  // 0001
-		MODE_NO_ACCELERATION = 2,   // 0010
-		MODE_50_APPLES = 4          // 0100
+		MODE_NO_ACCELERATION = 2,  // 0010
+		MODE_50_APPLES = 4,       // 0100
+		MODE_RANDOM_APPLES = 8    // 1000 new mode 
 	};
 
 
@@ -25,5 +26,8 @@ namespace ApplesGame
 	const float ROCK_SIZE = 10.f;
 	const int NUM_APPLES_EXTENDED = 50;
 	const float MAX_SPEED = 400.f;
+
+	const int MIN_INITIAL_APPLES = 1;// min count apples for generation
+	const int MAX_INITIAL_APPLES = 20;// max count apples for generation
 
 }
